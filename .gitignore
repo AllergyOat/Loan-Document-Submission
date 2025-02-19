@@ -1,1 +1,6 @@
-.vscode/settings.json
+.vscode/*
+
+// server 
+server/.env
+server/node_modules
+server/Notepad.txt

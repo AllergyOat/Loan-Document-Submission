@@ -1,18 +1,37 @@
-import { useState } from 'react'
-import Nav from './components/Nav'
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Nav from "./components/Nav";
+import RegisterNav from "./components/NavRegister";
+
+const AppContent = () => {
+    const location = useLocation();
+    const showRegisterNav = location.pathname === "/login" || location.pathname === "/register";
+
+    return (
+        <>
+            {showRegisterNav ? <RegisterNav /> : <Nav />}
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            </Routes>
+        </>
+    );
+};
+
 
 function App() {
-  const [count, setCount] = useState(0)
+    return (
+        <Router>
+            <AppContent />
+        </Router>
 
-  return (
-    <>
-      <Nav />
-      <div className='flex flex-col items-center justify-center h-screen'>
-        <h1 className="font-bold text-blue-950 underline">Hello world</h1>
-        <p>Hello everyone :D</p>
-      </div>
-    </>
-  )
+    );
 }
 
-export default App
+export default App;

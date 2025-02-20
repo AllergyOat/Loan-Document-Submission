@@ -30,6 +30,10 @@ db.query('SELECT * FROM user', (err, results) => {
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
+
+app.use(cors({ origin: "http://localhost:5173", credentials: true })); // Allow frontend to communicate
+
+
 app.listen(port, () => {
     console.log("Server is running on port " + port);
 })

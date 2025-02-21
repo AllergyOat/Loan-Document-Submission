@@ -5,8 +5,8 @@ const ProtectedRoute = ({ children }) => {
     const role = localStorage.getItem("role");
     const location = useLocation();
 
-    if (!token) {
-        return <Navigate to="/login" />;
+    if (location.pathname === "/dashboard") {
+        return children;
     }
 
     if (location.pathname === "/admin" && role !== "admin") {

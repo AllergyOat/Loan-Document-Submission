@@ -37,10 +37,17 @@ const Dashboard = () => {
     };
 
     return (
-        <div>
-            <h2>Student Dashboard</h2>
-            <p>{message}</p>
-            <button onClick={handleLogout} className="border-1">Logout</button>
+        <div className="">
+            <img src="/assets/images/Header.png" className="" alt="Header" />
+            <div className="block w-full">
+                <h1 className="text-4xl font-bold p-10">สื่อประชาสัมพันธ์ / ข่าวสาร</h1>
+            </div>
+            <section className="flex flex-col justify-center items-center">
+                <p className="">GetDate()</p>
+                <div className="block w-4/5 h-[250px] rounded-2xl bg-gray-300"></div>
+                <p className="px-10">{message}</p>
+                <button onClick={handleLogout} className="border-1">Logout</button>
+            </section>
         </div>
     );
 };

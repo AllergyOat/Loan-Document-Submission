@@ -8,7 +8,7 @@ const router = express.Router();
 
 // Register
 router.post("/register", (req, res) => {
-    const { name, birthday, tel, faculty, major, email, password } = req.body;
+    const { name, birthday, tel, faculty, major, email, password, studentID } = req.body;
 
     db.query("SELECT * FROM user WHERE email = ?", [email], async (err, result) => {
         if (err) {
@@ -21,8 +21,8 @@ router.post("/register", (req, res) => {
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt);
             db.query(
-                "INSERT INTO user (name, birthday, tel, faculty, major, email, password, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                [name, birthday, tel, faculty, major, email, hashedPassword, "student"],
+                "INSERT INTO user (name, birthday, tel, faculty, major, email, password, role, studentID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                [name, birthday, tel, faculty, major, email, hashedPassword, "student", studentID],
                 (insertErr, insertResult) => {
                     if (insertErr) {
                         console.error("Insert error:", insertErr);

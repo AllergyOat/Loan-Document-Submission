@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "r
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import Policy from "./pages/Policy";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Nav from "./components/Nav";
@@ -17,6 +18,7 @@ const AppContent = () => {
             <Routes>
                 <Route path="/" element={<Navigate to="/dashboard" />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/policy" element={<Policy />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />

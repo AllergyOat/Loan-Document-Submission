@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
 import Policy from "./pages/Policy";
+import Dashboard from "./pages/Dashboard";
+import Document from "./pages/Document";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Nav from "./components/Nav";
@@ -21,6 +22,7 @@ const AppContent = () => {
                 <Route path="/policy" element={<Policy />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/document" element={<Document />} />
                 <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
             </Routes>
         </>

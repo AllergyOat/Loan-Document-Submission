@@ -16,22 +16,17 @@ const db = mysql.createConnection({
     password: '473625',
     database: 'dsldb'
 });
-db.connect(err => { if (err) throw err; console.log('MySQL Connected'); });
+db.connect(err => { if (err) throw err; console.log('MySQL is connected'); });
 module.exports = db;
-
-db.query('SELECT * FROM user', (err, results) => {
-    if (err) {
-        console.error('Database query error:', err);
-    } else {
-        console.log('user Data:', results.map(user => user.name));
-    }
-});
 
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
+const UserRoutes = require('./routes/user');
+app.use('/api/auth', UserRoutes);
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true })); // Allow frontend to communicate
+
+app.use(cors({ origin: "http://localhost:5173", credentials: true })); 
 
 
 app.listen(port, () => {

@@ -5,6 +5,7 @@ import Policy from "./pages/Policy";
 import Dashboard from "./pages/Dashboard";
 import Document from "./pages/Document";
 import AdminDashboard from "./pages/AdminDashboard";
+import CreateDocument from "./pages/CreateDocument";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Nav from "./components/Nav";
 import RegisterNav from "./components/NavRegister";
@@ -23,6 +24,8 @@ const AppContent = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/document" element={<Document />} />
+                <Route path="/document/loan/:id" element={<CreateDocument />} />
+                <Route path="/document/refund/:id" element={<CreateDocument />} />
                 <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
             </Routes>
         </>

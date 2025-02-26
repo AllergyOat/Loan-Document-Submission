@@ -25,7 +25,10 @@ const login = (req, res) => {
                 process.env.JWT_SECRET,
                 { expiresIn: "1h" }
             );
-            res.json({ token, role: user.role });
+            res.json({
+                token,
+                user: { UserID: user.UserID, name: user.name, role: user.role }
+            });
 
         } catch (error) {
             console.error("Password Comparison Error:", error);

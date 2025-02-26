@@ -17,9 +17,14 @@ const Login = () => {
 
             // Store token & user role in localStorage
             localStorage.setItem("token", response.data.token);
-            localStorage.setItem("role", response.data.role); // Store role separately
+            localStorage.setItem("UserID", response.data.user.UserID);
+            localStorage.setItem("name", response.data.user.name);
+            localStorage.setItem("role", response.data.role); 
 
-            // Redirect based on user role
+            console.log("UserID : ", response.data.user.UserID);
+            console.log("User's name : ", response.data.user.name);
+
+
             if (response.data.role === "admin") {
                 navigate("/admin");
             } else {

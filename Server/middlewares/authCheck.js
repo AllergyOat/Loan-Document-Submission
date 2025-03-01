@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const db = require("../server");
 
 // Middleware for authentication
 exports.auth = (req, res, next) => {

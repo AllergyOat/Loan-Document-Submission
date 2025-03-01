@@ -3,7 +3,7 @@ const multer = require("multer");
 const path = require("path");
 
 // Get all documents
-const getDocuments = (req, res) => {
+const getAllDocuments = (req, res) => {
     db.query("SELECT * FROM document", (err, result) => {
         if (err) {
             console.error("Database error:", err);
@@ -13,6 +13,25 @@ const getDocuments = (req, res) => {
     });
 };
 
+const getDocumentStatus = (req, res) => {
+    const UserID = req.user.UserID;
+
+    if (!UserID) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    db.query(
+        "SELECT DocumentID, type, detail, DATE_FORMAT(upload_date, '%d-%m-%Y') AS upload_date, status FROM document WHERE UserID = ?",
+        [UserID],
+        (err, result) => {
+            if (err) {
+                console.error("Database error:", err);
+                return res.status(500).json({ message: "Database query error" });
+            }
+            res.json(result);
+        }
+    );
+};
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -46,7 +65,7 @@ const createDocument = (req, res) => {
     const filepath = req.file.path;
 
     db.query(
-        "INSERT INTO document (type, detail, filename, filepath, upload_date, UserID, name) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO document (type, detail, filename, filepath, upload_date, UserID, name, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'กำลังดำเนินการ')",
         [type, detail, filename, filepath, upload_date, UserID, name],
         (err, result) => {
             if (err) {
@@ -110,4 +129,4 @@ const deleteDocument = (req, res) => {
 };
 
 
-module.exports = { getDocuments, upload, createDocument, updateDocument, deleteDocument };
+module.exports = { getAllDocuments, getDocumentStatus, upload, createDocument, updateDocument, deleteDocument };

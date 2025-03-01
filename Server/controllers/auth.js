@@ -21,10 +21,11 @@ const login = (req, res) => {
 
             // Generate JWT Token
             const token = jwt.sign(
-                { id: user.id, role: user.role },
+                { UserID: user.UserID, role: user.role },
                 process.env.JWT_SECRET,
                 { expiresIn: "1h" }
             );
+
             res.json({
                 token,
                 user: { UserID: user.UserID, name: user.name, role: user.role }

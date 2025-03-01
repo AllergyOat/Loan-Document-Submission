@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Document from "./pages/Document";
 import AdminDashboard from "./pages/AdminDashboard";
 import CreateDocument from "./pages/CreateDocument";
+import ManageDocuments from "./pages/ManageDocument";
 import Status from "./pages/Status";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Nav from "./components/Nav";
@@ -28,6 +29,7 @@ const AppContent = () => {
                 <Route path="/document" element={<Document />} />
                 <Route path="/document/loan/:id" element={<CreateDocument />} />
                 <Route path="/document/refund/:id" element={<CreateDocument />} />
+                <Route path="/edit" element={<ProtectedRoute><ManageDocuments /></ProtectedRoute>} />
                 <Route path="/status" element={<Status />} />
                 <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
             </Routes>

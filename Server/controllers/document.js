@@ -13,6 +13,43 @@ const getAllDocuments = (req, res) => {
     });
 };
 
+
+
+const getUserDocuments = (req, res) => {
+    console.log("Decoded User in Controller:", req.user);
+
+    if (!req.user || !req.user.UserID) {
+        console.log("Authorization Failed: No UserID found in req.user");
+        return res.status(401).json({ message: "Unauthorized: User ID is missing" });
+    }
+
+    const UserID = req.user.UserID;
+    console.log("Fetching documents for UserID:", UserID);
+
+    const query = `
+        SELECT 
+            d.DocumentID, 
+            d.type, 
+            d.detail, 
+            d.filename, 
+            DATE_FORMAT(d.upload_date, '%d-%m-%Y') AS upload_date 
+        FROM document d
+        WHERE d.UserID = ?;
+    `;
+
+    db.query(query, [UserID], (err, result) => {
+        if (err) {
+            console.error("Database error:", err);
+            return res.status(500).json({ message: "Database query error" });
+        }
+
+        console.log("Query Result:", result);
+        res.json(result);
+    });
+};
+
+
+
 const getDocumentStatus = (req, res) => {
     const UserID = req.user.UserID;
 
@@ -129,4 +166,4 @@ const deleteDocument = (req, res) => {
 };
 
 
-module.exports = { getAllDocuments, getDocumentStatus, upload, createDocument, updateDocument, deleteDocument };
+module.exports = { getAllDocuments, getUserDocuments, getDocumentStatus, upload, createDocument, updateDocument, deleteDocument };

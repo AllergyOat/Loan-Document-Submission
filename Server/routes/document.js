@@ -4,7 +4,8 @@ const { auth } = require("../middlewares/authCheck");
 const documentController = require("../controllers/document");
 const router = express.Router();
 
-router.get("/document", documentController.getAllDocuments);
+router.get("/documents", documentController.getAllDocuments);
+router.get("/document", auth, documentController.getUserDocuments);
 router.get("/document/status", auth, documentController.getDocumentStatus);
 router.post("/document", upload, createDocument);
 router.put("/document/:id", documentController.updateDocument);

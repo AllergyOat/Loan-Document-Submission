@@ -10,6 +10,7 @@ const ProtectedRoute = ({ children }) => {
     }
 
     if (location.pathname === "/admin" && role !== "admin") {
+        console.log("Role: ", role);
         return <Navigate to="/dashboard" />;
     }
 

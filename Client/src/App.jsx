@@ -24,7 +24,6 @@ const AppContent = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/policy" element={<Policy />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/document" element={<Document />} />
                 <Route path="/document/loan/:id" element={<CreateDocument />} />

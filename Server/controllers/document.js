@@ -4,12 +4,27 @@ const path = require("path");
 
 // Get all documents
 const getAllDocuments = (req, res) => {
-    db.query("SELECT * FROM document", (err, result) => {
+    const query = `
+        SELECT 
+            d.DocumentID, 
+            d.type, 
+            d.detail, 
+            d.filename, 
+            DATE_FORMAT(d.upload_date, '%d-%m-%Y') AS upload_date, 
+            d.status,
+            u.UserID, 
+            u.name 
+        FROM document d
+        JOIN user u ON d.UserID = u.UserID;
+    `;
+
+    db.query(query, (err, result) => {
         if (err) {
             console.error("Database error:", err);
             return res.status(500).json({ message: "Database query error" });
         }
-        res.json(result);
+
+        res.json(result);  
     });
 };
 
@@ -120,30 +135,26 @@ const createDocument = (req, res) => {
 // Update a document
 const updateDocument = async (req, res) => {
     const documentId = parseInt(req.params.id, 10);
+    const { status } = req.body;
+
     if (isNaN(documentId)) return res.status(400).json({ message: "Invalid document ID format" });
 
-    const { type, detail, filename, filepath, upload_date, UserID, name } = req.body;
+    db.query(
+        "UPDATE document SET status = ? WHERE DocumentID = ?",
+        [status, documentId],
+        (err, result) => {
+            if (err) {
+                console.error("Database error:", err);
+                return res.status(500).json({ message: "Database query error" });
+            }
 
-    try {
-        if (!type || !detail || !filename || !filepath || !upload_date || !UserID || !name) {
-            return res.status(400).json({ message: "All fields are required" });
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "Document not found" });
+            }
+
+            res.json({ message: "Document status updated successfully" });
         }
-
-        const [result] = await db.promise().query(
-            "UPDATE document SET type = ?, detail = ?, filename = ?, filepath = ?, upload_date = ?, UserID = ?, name = ? WHERE DocumentID = ?",
-            [type, detail, filename, filepath, upload_date, UserID, name, documentId]
-        );
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: "Document not found or no changes made" });
-        }
-
-        res.json({ message: "Document updated successfully" });
-
-    } catch (error) {
-        console.error("Error updating document:", error);
-        res.status(500).json({ message: "Database query error" });
-    }
+    );
 };
 
 // Delete a document

@@ -19,10 +19,11 @@ const Login = () => {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("UserID", response.data.user.UserID);
             localStorage.setItem("name", response.data.user.name);
-            localStorage.setItem("role", response.data.role); 
+            localStorage.setItem("role", response.data.user.role); 
 
             console.log("UserID : ", response.data.user.UserID);
             console.log("User's name : ", response.data.user.name);
+            console.log("Role : ", response.data.user.role);
 
 
             if (response.data.role === "admin") {

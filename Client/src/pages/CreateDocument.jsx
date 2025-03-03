@@ -30,9 +30,9 @@ const CreateDocument = () => {
         } else if (window.location.pathname.includes("/document/refund")) {
             setType("การขอคืนเงิน");
             if (id === "1") {
-                setDetail("กรณีมีสิทธิสำรองจ่ายไปก่อน");
+                setDetail("สำรองจ่าย");
             } else if (id === "2") {
-                setDetail("กรณีนิสิตมีผลการเรียนดี A15 หน่วยกิต");
+                setDetail("ผลการเรียนดี A15 หน่วยกิต");
             }
         }
     }, [id]);
